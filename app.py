@@ -38,12 +38,19 @@ def upload_files():
     uploaded_file = request.files['image']
     if uploaded_file.filename !="":
         uploaded_file.save('guitar.jpg')
+        image = Image.open('guitar.jpg')
+        os.remove("guitar.jpg")
+        image.thumbnail((600, 600))
+        image.save('guitar.jpg')
+        
+        
+        
         os.system('./darknet detect cfg/yolov3.cfg yolov3.weights guitar.jpg')
 
 
     
         
-        os.remove("guitar.jpg")
+        
 
         
         with open("predictions.jpg", "rb") as image_file:
